@@ -1,0 +1,6 @@
+#!/bin/bash
+
+[[ -z "$1" || ! -f "$1" || "${1##*.}" != "c" ]] && { echo "Usage: $0 <filename>"; exit 1; }
+command -v gcc &>/dev/null || { echo "Error: gcc is not installed." >&2; exit 1; }
+
+gcc -o "${1%.c}" "$1" && "./${1%.c}" && rm -f "${1%.c}"
