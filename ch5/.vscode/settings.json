@@ -1,7 +1,10 @@
 {
   "files.associations": {
     "string.h": "c",
-    "new": "c"
+    "new": "c",
+    "types.h": "c",
+    "unistd.h": "c",
+    "stat.h": "c"
   },
   "cmake.configureOnOpen": false
 }
