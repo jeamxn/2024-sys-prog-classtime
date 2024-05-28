@@ -46,8 +46,6 @@ struct person *read_text_from_file(const char *filename) {
 
 int main(int argc, char **argv) {
   const char *filename = "person.dat";
-  const char *text = "Hello, World!";
-
   struct person p = {.name = "IU", .age = 31};
 
   if (write_text_to_file(filename, p)) {
