@@ -1,37 +1,46 @@
 /*
  file name:
-  file_text_high.c
+  file_text_low.c
  run as:
-  ./run file_text_high.c
+  ./run file_text_low.c
 */
 
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 int write_text_to_file(const char *filename, const char *text) {
-  FILE *file = fopen(filename, "w");
-  if (!file) {
+  int fd = open(filename, O_WRONLY | O_CREAT, 0644);
+  if (fd == -1) {
     perror("Error opening file for writing");
     return 1;
   }
-  fputs(text, file);
-  fclose(file);
+  int res = write(fd, text, strlen(text));
+  close(fd);
+  if (res == -1) {
+    perror("Error writing to file");
+    return 1;
+  }
   return 0;
 }
 
 char *read_text_from_file(const char *filename) {
-  FILE *file = fopen(filename, "r");
-  if (!file) {
+  int fd = open(filename, O_RDONLY);
+  if (fd == -1) {
     perror("Error opening file for reading");
     return NULL;
   }
   char *text = malloc(1000);
-  if (fgets(text, 1000, file) == NULL) {
+  if (read(fd, text, 1000) == -1) {
     free(text);
     perror("Error reading from file");
     text = NULL;
   }
-  fclose(file);
+  close(fd);
   return text;
 }
 
