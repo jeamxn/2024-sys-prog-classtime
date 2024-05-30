@@ -64,21 +64,21 @@ int main() {
   const char *text = "Hello, World!";
 
   if (write_text_to_file(filename, text)) {
-    fprintf(stderr, "Text could not be written to file\n");
+    perror("Text could not be written to file");
     return 1;
   }
 
   if (append_text_to_file(filename, "\nHello, again!")) {
-    fprintf(stderr, "Text could not be written to file\n");
+    perror("Text could not be written to file");
     return 1;
   }
 
   char *read_text = read_text_from_file(filename);
   if (read_text) {
-    printf("Read text: %s\n", read_text);
+    dprintf(STDOUT_FILENO, "Read text: %s\n", read_text);
     free(read_text);
   } else {
-    fprintf(stderr, "Text could not be read from file\n");
+    perror("Text could not be read from file");
   }
 
   return 0;

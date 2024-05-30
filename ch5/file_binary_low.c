@@ -56,16 +56,17 @@ int main(int argc, char **argv) {
   struct person p = {.name = "IU", .age = 31};
 
   if (write_binary_to_file(filename, p)) {
-    fprintf(stderr, "Binary Text could not be written to file\n");
+    perror("Binary Text could not be written to file");
     return 1;
   }
 
   struct person *read_text = read_binary_from_file(filename);
   if (read_text) {
-    printf("Read struct: %s %d\n", read_text->name, read_text->age);
+    dprintf(STDOUT_FILENO, "Read struct: %s %d\n", read_text->name,
+            read_text->age);
     free(read_text);
   } else {
-    fprintf(stderr, "Binary Text could not be read from file\n");
+    perror("Binary Text could not be read from file");
   }
 
   return 0;

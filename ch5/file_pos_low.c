@@ -19,9 +19,9 @@ static int write_text_to_file(const char *filename, const char *text) {
     perror("Error opening file for writing");
     return 1;
   }
-  printf("offset1: %ld\n", lseek(fd, 0, SEEK_CUR));
+  dprintf(STDOUT_FILENO, "offset1: %ld\n", lseek(fd, 0, SEEK_CUR));
   ssize_t res = write(fd, text, strlen(text));
-  printf("offset2: %ld\n", lseek(fd, 0, SEEK_CUR));
+  dprintf(STDOUT_FILENO, "offset2: %ld\n", lseek(fd, 0, SEEK_CUR));
   close(fd);
   if (res == -1) {
     perror("Error writing to file");
@@ -36,15 +36,15 @@ static char *read_text_from_file(const char *filename) {
     perror("Error opening file for reading");
     return NULL;
   }
-  printf("offset1: %ld\n", lseek(fd, 0, SEEK_CUR));
+  dprintf(STDOUT_FILENO, "offset1: %ld\n", lseek(fd, 0, SEEK_CUR));
   char *text = malloc(1000);
-  printf("offset2: %ld\n", lseek(fd, 0, SEEK_CUR));
+  dprintf(STDOUT_FILENO, "offset2: %ld\n", lseek(fd, 0, SEEK_CUR));
   if (read(fd, text, 1000) == -1) {
     free(text);
     perror("Error reading from file");
     text = NULL;
   }
-  printf("offset3: %ld\n", lseek(fd, 0, SEEK_CUR));
+  dprintf(STDOUT_FILENO, "offset3: %ld\n", lseek(fd, 0, SEEK_CUR));
   close(fd);
   return text;
 }
@@ -55,18 +55,18 @@ int main(int argc, char **argv) {
   // write
   const char *text = "Hello, World!";
   if (write_text_to_file(filename, text)) {
-    perror("Text could not be written to file\n");
+    perror("Text could not be written to file");
     return 1;
   }
-  printf("\n");
+  dprintf(STDOUT_FILENO, "\n");
 
   // read
   char *read_text = read_text_from_file(filename);
   if (read_text) {
-    printf("Read text: %s\n", read_text);
+    dprintf(STDOUT_FILENO, "Read text: %s\n", read_text);
     free(read_text);
   } else {
-    perror("Text could not be read from file\n");
+    perror("Text could not be read from file");
   }
 
   return 0;
