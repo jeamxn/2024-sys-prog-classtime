@@ -19,7 +19,7 @@ int write_text_to_file(const char *filename, const char *text) {
     perror("Error opening file for writing");
     return 1;
   }
-  int res = write(fd, text, strlen(text));
+  ssize_t res = write(fd, text, strlen(text));
   close(fd);
   if (res == -1) {
     perror("Error writing to file");
@@ -34,7 +34,7 @@ int append_text_to_file(const char *filename, const char *text) {
     perror("Error opening file for appending");
     return 1;
   }
-  int res = write(fd, text, strlen(text));
+  ssize_t res = write(fd, text, strlen(text));
   close(fd);
   if (res == -1) {
     perror("Error writing to file");
