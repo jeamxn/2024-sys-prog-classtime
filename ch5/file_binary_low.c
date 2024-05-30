@@ -17,6 +17,7 @@ struct person {
   char name[20];
   int age;
 };
+size_t person_size = sizeof(struct person);
 
 int write_text_to_file(const char *filename, struct person p) {
   int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -24,9 +25,9 @@ int write_text_to_file(const char *filename, struct person p) {
     perror("Error opening file for writing");
     return 1;
   }
-  ssize_t res = write(fd, &p, sizeof(struct person));
+  ssize_t res = write(fd, &p, person_size);
   close(fd);
-  if (res != sizeof(struct person)) {
+  if (res != person_size) {
     perror("Error writing to file");
     return 1;
   }
@@ -39,8 +40,8 @@ struct person *read_text_from_file(const char *filename) {
     perror("Error opening file for reading");
     return NULL;
   }
-  struct person *p = malloc(sizeof(struct person));
-  if (read(fd, p, sizeof(struct person)) != sizeof(struct person)) {
+  struct person *p = malloc(person_size);
+  if (read(fd, p, person_size) != person_size) {
     free(p);
     perror("Error reading from file");
     close(fd);
