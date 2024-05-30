@@ -5,6 +5,8 @@
     "type_traits": "c",
     "new": "c",
     "typeinfo": "c",
-    "types.h": "c"
+    "types.h": "c",
+    "stdio.h": "c",
+    "unistd.h": "c"
   }
 }
