@@ -14,7 +14,7 @@ struct person {
 };
 size_t person_size = sizeof(struct person);
 
-int write_text_to_file(const char *filename, struct person p) {
+int write_binary_to_file(const char *filename, struct person p) {
   FILE *fp = fopen(filename, "wb");
   if (!fp) {
     perror("Error opening file for writing");
@@ -29,7 +29,7 @@ int write_text_to_file(const char *filename, struct person p) {
   return 0;
 }
 
-struct person *read_text_from_file(const char *filename) {
+struct person *read_binary_from_file(const char *filename) {
   FILE *fp = fopen(filename, "rb");
   if (!fp) {
     perror("Error opening file for reading");
@@ -49,12 +49,12 @@ int main(int argc, char **argv) {
   const char *filename = "person.dat";
   struct person p = {.name = "IU", .age = 31};
 
-  if (write_text_to_file(filename, p)) {
+  if (write_binary_to_file(filename, p)) {
     fprintf(stderr, "Binary Text could not be written to file\n");
     return 1;
   }
 
-  struct person *read_text = read_text_from_file(filename);
+  struct person *read_text = read_binary_from_file(filename);
   if (read_text) {
     printf("Read struct: %s %d\n", read_text->name, read_text->age);
     free(read_text);
