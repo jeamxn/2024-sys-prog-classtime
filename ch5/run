@@ -7,4 +7,4 @@ command -v gcc &>/dev/null || { echo "Error: gcc is not installed." >&2; exit 1;
 
 shift
 
-gcc -o "${file%.c}" "$file" && "./${file%.c}" $@ && rm -f "${file%.c}"
+gcc -o "${file%.c}" "$file" -pthread && "./${file%.c}" $@ && rm -f "${file%.c}"
